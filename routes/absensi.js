@@ -6,7 +6,7 @@ const absensiController = require('../controllers/absensiController');
 router.get('/', absensiController.getAbsensi);
 
 // CREATE
-router.get('/tambah', absensiController.getAbsensiForm);
+router.get('/tambah/', absensiController.getAbsensiForm);
 router.post('/tambah', absensiController.createAbsensi);
 
 // UPDATE

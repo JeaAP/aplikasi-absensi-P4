@@ -4,191 +4,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data room</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Data Room</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Custom CSS -->
     <style>
-        /* Resetting default styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
             color: white;
+            min-height: 100vh;
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            padding: 40px;
-            width: 100%;
-            max-width: 900px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-            animation: fadeIn 1s ease-in-out;
+            margin-top: 50px;
         }
 
-        h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 30px;
-            text-align: center;
+        .card {
+            border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
             font-weight: bold;
         }
 
-        .add-button {
-            text-decoration: none;
-            color: #fff;
-            background: linear-gradient(90deg, #6a11cb, #2575fc);
-            padding: 12px 20px;
-            border-radius: 30px;
-            font-size: 18px;
-            margin-bottom: 30px;
-            display: inline-block;
-            transition: all 0.3s ease;
+        .card-text {
+            font-size: 1rem;
+        }
+
+        .btn-action {
+            border-radius: 50px;
+        }
+
+        .qr-code {
+            margin-top: 10px;
             text-align: center;
-        }
-
-        .add-button:hover {
-            background: linear-gradient(90deg, #2575fc, #6a11cb);
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        li {
-            background: #fff;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        li:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        .info {
-            font-size: 18px;
-            color: #333;
-        }
-
-        .actions {
-            font-size: 16px;
-        }
-
-        .actions a {
-            color: #3498db;
-            margin-right: 15px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .actions a:hover {
-            color: #2980b9;
-        }
-
-        .actions a.delete {
-            color: #e74c3c;
-        }
-
-        .actions a.delete:hover {
-            color: #c0392b;
-        }
-
-        .material-icons {
-            vertical-align: middle;
-            margin-right: 8px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Mobile responsiveness */
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .add-button {
-                font-size: 16px;
-                padding: 12px;
-            }
-
-            li {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .actions {
-                margin-top: 10px;
-                text-align: left;
-            }
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Data room</h1>
-        <a href="/ruangan/tambah" class="add-button"><span class="material-icons">add_circle_outline</span>Tambah room</a>
-        <ul>
-            <% room.forEach(function(room) { %>
-                <li>
-                    <div class="info">
-                        <span><strong>Nama:</strong> <%= room.nama %></span><br>
-                        <span><strong>Lokasi:</strong> <%= room.lokasi %></span><br>
+        <h1 class="text-center mb-4">Data Room</h1>
+        <a href="/ruangan/tambah" class="btn btn-primary mb-4 btn-lg btn-action">
+            <i class="fas fa-plus-circle"></i> Tambah Room
+        </a>
+        <div class="row g-4">
+            <% room.forEach(function (room) { %>
+                <div class="col-md-4">
+                    <div class="card text-dark">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= room.nama %></h5>
+                            <p class="card-text">
+                                <strong>Lokasi:</strong> <%= room.lokasi %>
+                            </p>
+                            <div class="d-flex justify-content-between">
+                                <a href="/ruangan/<%= room.room_id %>/edit" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="/ruangan/<%= room.room_id %>/delete" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to delete this room?')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                                <a href="/absensi/tambah?room_id=<%= room.room_id %>" class="btn btn-success btn-sm">
+                                    <i class="fas fa-calendar-plus"></i> Absensi
+                                </a>
+                            </div>
+                            <div class="qr-code mt-3" id="qrcode-<%= room.room_id %>"></div>
+                        </div>
                     </div>
-                    <div class="actions">
-                        <a href="/ruangan/<%= room.room_id %>/edit"><span class="material-icons">edit</span>Edit</a> |
-                        <a href="/ruangan/<%= room.room_id %>/delete" class="delete" onclick="return confirmDelete()">
-                            <span class="material-icons">delete</span>Delete
-                        </a> |
-                        <a href="/absensi/tambah?room_id=<%= room.room_id %>"><span class="material-icons">add</span>Absensi</a>
-                    </div>
-                    <!-- Div for QR Code -->
-                    <div id="qrcode-<%= room.room_id %>" style="margin-top: 10px;"></div>
-                </li>
+                </div>
             <% }) %>
-        </ul>
+        </div>
     </div>
-    
 
-    <script>
-        // Fungsi konfirmasi sebelum menghapus
-        function confirmDelete() {
-            return confirm('Are you sure you want to delete this user?');
-        }
-    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         // Fungsi untuk membuat QR Code
@@ -204,14 +104,12 @@
                 correctLevel: QRCode.CorrectLevel.H
             });
         }
-    
+
         // Panggil fungsi untuk setiap room
-        <% room.forEach(function(room) { %>
+        <% room.forEach(function (room) { %>
             generateQRCode('<%= room.room_id %>');
         <% }); %>
     </script>
-    
-
 </body>
 
 </html>
